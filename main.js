@@ -1,4 +1,5 @@
 generateRadios();
+var state;
 
 function generateRadios() {
     let contentdiv = $("#content");
@@ -21,7 +22,7 @@ function generateRadios() {
             let groupname = PERKS[special][i].name.replace(/ /g, "-").toLowerCase();
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
                 radios += "<label class=\"btn btn-outline-light\">" +
-                    "<input type=\"radio\" name=\""+groupname+"\" id=\"rank"+j+"\" autocomplete=\"off\"> Rank" + j +
+                    "<input type=\"radio\" name=\""+groupname+"\" id=\""+groupname+"rank"+j+"\" autocomplete=\"off\"> Rank" + j +
                     "</label>";
             radios += "</div></div>";
             tabcontent += radios;
@@ -30,4 +31,26 @@ function generateRadios() {
     }
     tabcontent += "</div>";
     contentdiv.append(tabcontent);
+}
+
+function saveState() {
+    state = "";
+    console.log("State: (saved to var state");
+    $(".active > input").each(function() {
+        state += this.id +",";
+    });
+    state = state.substring(0, state.length - 1);
+    console.log(state);
+}
+
+function clearState() {
+    $(".active > input").each(function() {
+        $("#"+this.id).parent().removeClass("active");
+    });
+}
+
+function loadState() {
+    for (let idn of state.split(',')) {
+        $("#"+idn).parent().addClass("active");
+    }
 }
