@@ -223,3 +223,9 @@ const PERKS = {
         {"name": "Super Duper", "ranks": 1}
     ]
 };
+
+const TOTAL_PERK_CARDS = PERKS.Strength.length +
+    PERKS.Perception.length + PERKS.Endurance.length +
+    PERKS.Charisma.length + PERKS.Intelligence.length +
+    PERKS.Agility.length + PERKS.Luck.length;
+
