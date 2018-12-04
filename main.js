@@ -21,7 +21,7 @@ function generateRadios() {
                 "<div class=\"btn-group btn-group-toggle col-sm-3\" data-toggle=\"buttons\">";
             let groupname = PERKS[special][i].name.replace(/ /g, "-").toLowerCase();
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
-                radios += "<label class=\"btn btn-outline-light\">" +
+                radios += "<label class=\"btn btn-outline-primary\">" +
                     "<input type=\"radio\" name=\""+groupname+"\" id=\""+groupname+"rank"+j+"\" autocomplete=\"off\"> Rank" + j +
                     "</label>";
             radios += "</div></div>";
