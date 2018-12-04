@@ -50,6 +50,7 @@ function clearState() {
 }
 
 function loadState() {
+    clearState();
     for (let idn of state.split(',')) {
         $("#"+idn).parent().addClass("active");
     }
