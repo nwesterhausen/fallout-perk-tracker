@@ -236,3 +236,5 @@ for (special in Object.keys(PERKS)) {
     }
 }
 const TOTAL_REALIZED_CARDS = parseInt(rankedCount);
+
+const SAVED_COOKIE_NAME = "fallout-tool-cookie";
