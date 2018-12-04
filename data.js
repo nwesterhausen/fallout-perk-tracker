@@ -229,3 +229,10 @@ const TOTAL_PERK_CARDS = PERKS.Strength.length +
     PERKS.Charisma.length + PERKS.Intelligence.length +
     PERKS.Agility.length + PERKS.Luck.length;
 
+let rankedCount = 0;
+for (special in Object.keys(PERKS)) {
+    for (let i=0; i++; i<PERKS[special].length) {
+        rankedCount += PERKS[special][i].ranks;
+    }
+}
+const TOTAL_REALIZED_CARDS = parseInt(rankedCount);
