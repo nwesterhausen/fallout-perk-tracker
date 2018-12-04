@@ -1,5 +1,10 @@
+var state = Cookies.get(SAVED_COOKIE_NAME);
+// Build the page
 generateRadios();
-var state;
+// Check for saved cookie
+if (state) {
+    loadState();
+}
 
 function generateRadios() {
     let contentdiv = $("#content");
