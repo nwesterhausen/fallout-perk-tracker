@@ -5,6 +5,11 @@ generateRadios();
 if (state) {
     loadState();
 }
+// Register auto-saving
+$("input").onchange(function () {
+    saveState();
+    Cookies.set(SAVED_COOKIE_NAME, state);
+});
 
 function generateRadios() {
     let contentdiv = $("#content");
