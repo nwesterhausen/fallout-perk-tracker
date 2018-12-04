@@ -3,6 +3,8 @@ var state = Cookies.get(SAVED_COOKIE_NAME);
 generateRadios();
 // Check for saved cookie
 if (state) {
+    console.log("Sanitizing state");
+    state = state.replace(/[ !'".]/g, "-");
     loadState();
 }
 // Register auto-saving
