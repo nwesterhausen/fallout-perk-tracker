@@ -12,6 +12,8 @@ $("input").change(function () {
         Cookies.set(SAVED_COOKIE_NAME, state);
     },100);
 });
+// Register menu buttons
+$("#btnClearAll").click(clearAllData);
 
 function generateRadios() {
     let contentdiv = $("#content");
@@ -66,4 +68,17 @@ function loadState() {
     for (let idn of state.split(',')) {
         $("#"+idn).parent().addClass("active");
     }
+}
+
+function clearAllData() {
+    Cookies.remove(SAVED_COOKIE_NAME);
+    clearState();
+    let alertid = Date.now();
+    $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-danger\">" +
+        "Deleted stored cookie and wiped the slate clean!" +
+        "</div>");
+    setTimeout(function() {
+        $("#"+alertid).remove();
+    }, 5000);
+
 }
