@@ -77,11 +77,19 @@ function clearState() {
     });
 }
 
-function loadState() {
+function loadState(givenstate) {
     clearState();
-    for (let idn of state.split(',')) {
-        $("#"+idn).parent().addClass("active");
+    if (typeof givenstate !== "undefined") {
+        if (givenstate === "") return;
+        for (let idn of givenstate.split(',')) {
+            $("#"+idn).parent().addClass("active");
+        }
+    } else {
+        for (let idn of state.split(',')) {
+            $("#" + idn).parent().addClass("active");
+        }
     }
+    saveState();
 }
 
 function clearAllData() {
@@ -138,13 +146,31 @@ function download() {
 function loadFromClipboard() {
     $loadWindow.modal('show');
     $("#btnModalLoad").click(function(){
+        $("#btnModalLoad").unbind();
         $loadWindow.modal('hide');
         let tempState = $("#loadStateTextarea").val();
         $("#loadStateTextarea").html("");
         console.log("Sanitizing loaded state");
-        state = tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
-        loadState();
-        saveState();
-        $("#loadStateTextarea").html("");
-    })
+        tempState = ""+ tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
+        loadState(tempState);
+        if (state && state !== "" && tempState !== "") {
+            //successfully loaded
+            let alertid = Date.now();
+            $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-success\">" +
+                "Loaded your perks successfully!" +
+                "</div>");
+            setTimeout(function() {
+                $("#"+alertid).remove();
+            }, 5000);
+            $("#loadStateTextarea").html("");
+        } else {
+            let alertid = Date.now();
+            $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-danger\">" +
+                "Couldn't load a single perk!" +
+                "</div>");
+            setTimeout(function() {
+                $("#"+alertid).remove();
+            }, 5000);
+        }
+    });
 }
