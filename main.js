@@ -141,7 +141,7 @@ function loadFromClipboard() {
         let tempState = $("#loadStateTextarea").val();
         $("#loadStateTextarea").html("");
         console.log("Sanitizing loaded state");
-        state = tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-]/g, "");
+        state = tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
         loadState();
         saveState();
         $("#loadStateTextarea").html("");
