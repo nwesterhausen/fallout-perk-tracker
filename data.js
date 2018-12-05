@@ -249,7 +249,7 @@ const MODAL_HTML = "<div class=\"modal\">" +
     "        </button>" +
     "      </div>" +
     "      <div class=\"modal-body\">" +
-    "        <textarea class='form-control' placeholder='Paste your save data here' id='loadStateTextarea'></textarea>" +
+    "        <textarea class='form-control' rows=\"9\" placeholder='Paste your save data here' id='loadStateTextarea'></textarea>" +
     "      </div>" +
     "      <div class=\"modal-footer\">" +
     "        <button id='btnModalLoad' type=\"button\" class=\"btn btn-primary\">Load</button>" +
