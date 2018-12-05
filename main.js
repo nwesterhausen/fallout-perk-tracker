@@ -1,5 +1,7 @@
 var state = Cookies.get(SAVED_COOKIE_NAME);
 var $loadWindow = $(MODAL_HTML);
+
+
 // Build the page
 generateRadios();
 // Check for saved cookie
@@ -8,13 +10,15 @@ if (state) {
     state = state.replace(/[ !'".]/g, "-");
     loadState();
 }
+
 // Register auto-saving
-$("input").change(function () {
+$("input[type='radio']").change(function () {
     setTimeout(function() {
         saveState();
         Cookies.set(SAVED_COOKIE_NAME, state);
-    },100);
+    }, 100);
 });
+
 // Register menu buttons
 $("#btnClearAll").click(clearAllData);
 $("#btnCopyTo").click(copyToClipboard);
@@ -24,21 +28,23 @@ $("#btnLoadFrom").click(loadFromClipboard);
 function generateRadios() {
     let contentdiv = $("#content");
     let tabheader = "<ul class=\"nav nav-tabs\">\n";
+    let key = "strength";
+    
     for (let special of Object.keys(PERKS)) {
+        active =
         tabheader += "  <li class=\"nav-item\">\n" +
-            "    <a class=\"nav-link\" data-toggle=\"tab\" href=\"#" + special + "\">" +
-            special.substring(0, 1) + "</a>\n" +
+            "    <a class=\"nav-link "+ (key ==  special.toLowerCase() ? "active show" : "") +"\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText' style='display:none;'>" + special.substring(1) + "</span> </a>\n" +
             "  </li>";
     }
     tabheader += "</ul>";
     contentdiv.append(tabheader);
     let tabcontent = "<div id=\"tabContent\" class=\"tab-content\">";
     for (let special of Object.keys(PERKS)) {
-        tabcontent += "<div class=\"tab-pane fade\" id=\""+special+"\">";
+        tabcontent += "<div class=\"tab-pane fade " + (key ==  special.toLowerCase() ? "active show" : "") + "\" id=\""+special+"\">";
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
             let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
-            let radios = "<div class='row' id='"+groupname+"'><div class='col-sm-3'><span style='margin-right:15px'>"+PERKS[special][i].name+"</span><span class='badge badge-pill badge-secondary'>Level "+PERKS[special][i].levelreq+"</span></div>" +
+            let radios = "<div class='row mb-2' id='"+groupname+"'><div class='col-sm-3'><span style='margin-right:15px'>"+PERKS[special][i].name+"</span><span class='badge badge-pill badge-secondary'>Level "+PERKS[special][i].levelreq+"</span></div>" +
                 "<div class=\"btn-group btn-group-toggle col-sm-6\" data-toggle=\"buttons\">";
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
                 radios += "<label class=\"btn btn-outline-primary\">" +
