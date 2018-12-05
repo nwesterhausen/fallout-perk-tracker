@@ -6,6 +6,7 @@ if (state) {
     console.log("Sanitizing state");
     state = state.replace(/[ !'".]/g, "-");
     loadState();
+    saveState();
 }
 // Register auto-saving
 $("input").change(function () {
@@ -35,14 +36,19 @@ function generateRadios() {
         tabcontent += "<div class=\"tab-pane fade\" id=\""+special+"\">";
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
-            let radios = "<div class='row'><span class='col-sm-3'>"+PERKS[special][i].name+"</span>" +
-                "<div class=\"btn-group btn-group-toggle col-sm-3\" data-toggle=\"buttons\">";
             let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
+            let radios = "<div class='row' id='"+groupname+"'><div class='col-sm-3'><span style='margin-right:15px'>"+PERKS[special][i].name+"</span><span class='badge badge-pill badge-secondary'>Level "+PERKS[special][i].levelreq+"</span></div>" +
+                "<div class=\"btn-group btn-group-toggle col-sm-6\" data-toggle=\"buttons\">";
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
                 radios += "<label class=\"btn btn-outline-primary\">" +
                     "<input type=\"radio\" name=\""+groupname+"\" id=\""+groupname+"rank"+j+"\" autocomplete=\"off\"> Rank" + j +
                     "</label>";
-            radios += "</div></div>";
+            radios += "</div>" +
+                "<div class='col-sm-3'><button hidden='' class='btn btn-danger btn-sm' id='reset-"+groupname+"' onclick='(function(){" +
+                "$(\"#"+groupname+" > div > label\").removeClass(\"active\");" +
+                "$(\"#reset-"+groupname+"\").attr(\"hidden\",\"\");" +
+                "})()'>RESET</button></div>" +
+                "</div>";
             tabcontent += radios;
         }
         tabcontent += "</div>";
@@ -53,9 +59,10 @@ function generateRadios() {
 
 function saveState() {
     state = "";
-    console.log("State: (saved to var state");
+    console.log("State: (saved to var state)");
     $(".active > input").each(function() {
         state += this.id +",";
+        $("#reset-"+this.name).removeAttr("hidden");
     });
     state = state.substring(0, state.length - 1);
     console.log(state);
