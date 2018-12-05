@@ -73,6 +73,7 @@ function saveState() {
 function clearState() {
     $(".active > input").each(function() {
         $("#"+this.id).parent().removeClass("active");
+        $("#reset-"+this.name).attr("hidden","");
     });
 }
 
