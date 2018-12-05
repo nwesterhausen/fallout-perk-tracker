@@ -1,4 +1,5 @@
 var state = Cookies.get(SAVED_COOKIE_NAME);
+var $loadWindow = $(MODAL_HTML);
 // Build the page
 generateRadios();
 // Check for saved cookie
@@ -19,6 +20,7 @@ $("input").change(function () {
 $("#btnClearAll").click(clearAllData);
 $("#btnCopyTo").click(copyToClipboard);
 $("#btnDownload").click(download);
+$("#btnLoadFrom").click(loadFromClipboard);
 
 function generateRadios() {
     let contentdiv = $("#content");
@@ -130,4 +132,18 @@ function download() {
     element.click();
 
     document.body.removeChild(element);
+}
+
+function loadFromClipboard() {
+    $loadWindow.modal('show');
+    $("#btnModalLoad").click(function(){
+        $loadWindow.modal('hide');
+        let tempState = $("#loadStateTextarea").val();
+        $("#loadStateTextarea").html("");
+        console.log("Sanitizing loaded state");
+        state = tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-]/g, "");
+        loadState();
+        saveState();
+        $("#loadStateTextarea").html("");
+    })
 }
