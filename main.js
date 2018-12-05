@@ -7,7 +7,6 @@ if (state) {
     console.log("Sanitizing state");
     state = state.replace(/[ !'".]/g, "-");
     loadState();
-    saveState();
 }
 // Register auto-saving
 $("input").change(function () {
