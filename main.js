@@ -33,14 +33,14 @@ function generateRadios() {
     for (let special of Object.keys(PERKS)) {
         active =
             tabheader += "  <li class=\"nav-item\">\n" +
-                "    <a class=\"nav-link " + (key == special.toLowerCase() ? "active show" : "") + "\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
+                "    <a class=\"nav-link " + (key === special.toLowerCase() ? "active show" : "") + "\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
                 "  </li>";
     }
     tabheader += "</ul>";
     contentdiv.append(tabheader);
     let tabcontent = "<div id=\"tabContent\" class=\"tab-content\">";
     for (let special of Object.keys(PERKS)) {
-        tabcontent += "<div class=\"tab-pane fade " + (key == special.toLowerCase() ? "active show" : "") + "\" id=\"" + special + "\">";
+        tabcontent += "<div class=\"tab-pane fade " + (key === special.toLowerCase() ? "active show" : "") + "\" id=\"" + special + "\">";
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
             let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
@@ -140,8 +140,9 @@ function loadFromClipboard() {
     $("#btnModalLoad").click(function () {
         $("#btnModalLoad").unbind();
         $loadWindow.modal('hide');
-        let tempState = $("#loadStateTextarea").val();
-        $("#loadStateTextarea").html("");
+        let $pasteArea = $("#loadStateTextarea");
+        let tempState = $pasteArea.val();
+        $pasteArea.html("");
         console.log("Sanitizing loaded state");
         tempState = "" + tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
         loadState(tempState);
