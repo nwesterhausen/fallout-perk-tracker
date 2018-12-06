@@ -160,6 +160,7 @@ const PERKS = {
         {"name": "Power User", "ranks": 3,"levelreq":50}
     ],
     "Agility": [
+        {"name": "Action Boy/Girl", "ranks": 3,"levelreq":1},
         {"name": "Born Survivor", "ranks": 3,"levelreq":3},
         {"name": "Gun Runner", "ranks": 2,"levelreq":4},
         {"name": "Moving Target", "ranks": 1,"levelreq":5},

@@ -18,7 +18,7 @@ if (state === null && document.cookie !== "") {
 }
 if (state) {
     console.log("Sanitizing state");
-    state = state.replace(/[ !'".]/g, "-");
+    state = state.replace(/[ !'"./]/g, "-");
     localStorage.setItem(SAVED_COOKIE_NAME, state);
     loadState();
 }
@@ -54,7 +54,7 @@ function generateRadios() {
         tabcontent += "<div class=\"tab-pane fade " + (key === special.toLowerCase() ? "active show" : "") + "\" id=\"" + special + "\">";
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
-            let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
+            let groupname = PERKS[special][i].name.replace(/[ !'"./]/g, "-").toLowerCase();
             let radios = "<div class='row mb-2' id='" + groupname + "'><div class='col-sm-4'><span class='mr-1'>" + PERKS[special][i].name + "</span><span class='badge badge-pill badge-secondary'>Level " + PERKS[special][i].levelreq + "</span></div>" +
                 "<div class=\"btn-group btn-group-toggle col-sm-auto\" data-toggle=\"buttons\">";
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
@@ -155,7 +155,7 @@ function loadFromClipboard() {
         let tempState = $pasteArea.val();
         $pasteArea.html("");
         console.log("Sanitizing loaded state");
-        tempState = "" + tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
+        tempState = "" + tempState.replace(/[ !'"./]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
         loadState(tempState);
         if (state && state !== "" && tempState !== "") {
             // successfully loaded
