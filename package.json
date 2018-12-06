@@ -1,0 +1,18 @@
+{
+  "name": "fallout-perk-tracker",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "bootswatch": "^4.1.3",
+    "jquery": "^3.3.1",
+    "js-cookie": "^2.2.0",
+    "popper.js": "^1.14.6"
+  },
+  "repository": "github.com/nwesterhausen/fallout-perk-tracker",
+  "description": "Simple web utility to track which perk cards you have in Fallout 76.",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
