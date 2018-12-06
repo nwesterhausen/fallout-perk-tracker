@@ -33,7 +33,7 @@ function generateRadios() {
     for (let special of Object.keys(PERKS)) {
         active =
         tabheader += "  <li class=\"nav-item\">\n" +
-            "    <a class=\"nav-link "+ (key ==  special.toLowerCase() ? "active show" : "") +"\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText' style='display:none;'>" + special.substring(1) + "</span> </a>\n" +
+            "    <a class=\"nav-link "+ (key ==  special.toLowerCase() ? "active show" : "") +"\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
             "  </li>";
     }
     tabheader += "</ul>";
@@ -44,7 +44,7 @@ function generateRadios() {
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
             let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
-            let radios = "<div class='row mb-2' id='"+groupname+"'><div class='col-sm-3'><span style='margin-right:15px'>"+PERKS[special][i].name+"</span><span class='badge badge-pill badge-secondary'>Level "+PERKS[special][i].levelreq+"</span></div>" +
+            let radios = "<div class='row mb-2' id='"+groupname+"'><div class='col-sm-3'><span class='mr-1'>"+PERKS[special][i].name+"</span><span class='badge badge-pill badge-secondary'>Level "+PERKS[special][i].levelreq+"</span></div>" +
                 "<div class=\"btn-group btn-group-toggle col-sm-6\" data-toggle=\"buttons\">";
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
                 radios += "<label class=\"btn btn-outline-primary\">" +

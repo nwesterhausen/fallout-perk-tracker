@@ -1,0 +1,11 @@
+.specText {
+    display: none;
+}
+.nav-tabs .nav-link:hover > .specText{
+    display: inline-block !important;
+}
+.tab-content{
+    padding: 10px;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
