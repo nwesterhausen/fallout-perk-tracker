@@ -1,4 +1,3 @@
-//let state = Cookies.get(SAVED_COOKIE_NAME);
 let state = "";
 let $loadWindow = $(MODAL_HTML);
 
@@ -13,11 +12,14 @@ if (typeof (Storage) !== "undefined") {
 // Build the page
 generateRadios();
 // Check if state is stored in a cookie instead
-if (state === null && Cookies.get(SAVED_COOKIE_NAME) !== undefined)
-    loadFromCookie();
-else if (state) {
+if (state === null && document.cookie !== "") {
+    state = document.cookie.split("=")[1].replace(/%2C/g, ",");
+    alert("Loaded state from the Cookie, will now use web storage!");
+}
+if (state) {
     console.log("Sanitizing state");
     state = state.replace(/[ !'".]/g, "-");
+    localStorage.setItem(SAVED_COOKIE_NAME, state);
     loadState();
 }
 
@@ -25,9 +27,7 @@ else if (state) {
 $("input[type='radio']").change(function () {
     setTimeout(function () {
         saveState();
-        //Cookies.set(SAVED_COOKIE_NAME, state);
-        if (typeof (Storage) !== "undefined")
-            localStorage.setItem(SAVED_COOKIE_NAME, state);
+        localStorage.setItem(SAVED_COOKIE_NAME, state);
     }, 100);
 });
 
@@ -109,7 +109,6 @@ function loadState(givenstate) {
 }
 
 function clearAllData() {
-    //Cookies.remove(SAVED_COOKIE_NAME);
     localStorage.clear();
     clearState();
     alert("Cleared any saved states!", "alert-danger");
@@ -179,9 +178,4 @@ function alert(message, style = "alert-info") {
     setTimeout(function () {
         $("#" + alertid).remove();
     }, ALERT_DISPLAY_TIME);
-}
-
-function loadFromCookie() {
-    loadState(Cookies.get(SAVED_COOKIE_NAME));
-    alert("Loaded state from the Cookie, will now use web storage!");
 }
