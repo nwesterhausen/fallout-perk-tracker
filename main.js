@@ -39,7 +39,7 @@ $("#btnLoadPaste").click(loadFromClipboard);
 
 function generateRadios() {
     let contentdiv = $("#content");
-    let tabheader = "<ul class=\"nav nav-tabs\">\n";
+    let tabheader = "<ul class=\"nav nav-tabs nav-justified\">\n";
     let key = "strength";
 
     for (let special of Object.keys(PERKS)) {
@@ -55,18 +55,18 @@ function generateRadios() {
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
             let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
-            let radios = "<div class='row mb-2' id='" + groupname + "'><div class='col-sm-3'><span class='mr-1'>" + PERKS[special][i].name + "</span><span class='badge badge-pill badge-secondary'>Level " + PERKS[special][i].levelreq + "</span></div>" +
-                "<div class=\"btn-group btn-group-toggle col-sm-6\" data-toggle=\"buttons\">";
+            let radios = "<div class='row mb-2' id='" + groupname + "'><div class='col-sm-4'><span class='mr-1'>" + PERKS[special][i].name + "</span><span class='badge badge-pill badge-secondary'>Level " + PERKS[special][i].levelreq + "</span></div>" +
+                "<div class=\"btn-group btn-group-toggle col-sm-auto\" data-toggle=\"buttons\">";
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
                 radios += "<label class=\"btn btn-outline-primary\">" +
                     "<input type=\"radio\" name=\"" + groupname + "\" id=\"" + groupname + "rank" + j + "\" autocomplete=\"off\"> Rank" + j +
                     "</label>";
-            radios += "</div>" +
-                "<div class='col-sm-3'><button hidden='' class='btn btn-danger btn-sm' id='reset-" + groupname + "' onclick='(function(){" +
+            radios += "" +
+                "<div class='col-sm-auto'><button hidden='' class='btn btn-danger btn-sm' id='reset-" + groupname + "' onclick='(function(){" +
                 "$(\"#" + groupname + " > div > label\").removeClass(\"active\");" +
                 "$(\"#reset-" + groupname + "\").attr(\"hidden\",\"\");" +
-                "})()'>RESET</button></div>" +
-                "</div>";
+                "})()'>&times;</button></div>" +
+                "</div></div>";
             tabcontent += radios;
         }
         tabcontent += "</div>";
