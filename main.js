@@ -1,11 +1,21 @@
-let state = Cookies.get(SAVED_COOKIE_NAME);
+//let state = Cookies.get(SAVED_COOKIE_NAME);
+let state = "";
 let $loadWindow = $(MODAL_HTML);
 
+// Check for local storage
+if (typeof (Storage) !== "undefined") {
+    // Load
+    state = localStorage.getItem(SAVED_COOKIE_NAME);
+} else {
+    alert("Unable to use local storage API, cannot save state!", "alert-danger")
+}
 
 // Build the page
 generateRadios();
-// Check for saved cookie
-if (state) {
+// Check if state is stored in a cookie instead
+if (state === null && Cookies.get(SAVED_COOKIE_NAME) !== undefined)
+    loadFromCookie();
+else if (state) {
     console.log("Sanitizing state");
     state = state.replace(/[ !'".]/g, "-");
     loadState();
@@ -15,7 +25,9 @@ if (state) {
 $("input[type='radio']").change(function () {
     setTimeout(function () {
         saveState();
-        Cookies.set(SAVED_COOKIE_NAME, state);
+        //Cookies.set(SAVED_COOKIE_NAME, state);
+        if (typeof (Storage) !== "undefined")
+            localStorage.setItem(SAVED_COOKIE_NAME, state);
     }, 100);
 });
 
@@ -23,7 +35,7 @@ $("input[type='radio']").change(function () {
 $("#btnClearAll").click(clearAllData);
 $("#btnCopyTo").click(copyToClipboard);
 $("#btnDownload").click(download);
-$("#btnLoadFrom").click(loadFromClipboard);
+$("#btnLoadPaste").click(loadFromClipboard);
 
 function generateRadios() {
     let contentdiv = $("#content");
@@ -32,8 +44,8 @@ function generateRadios() {
 
     for (let special of Object.keys(PERKS)) {
         tabheader += "  <li class=\"nav-item\">\n" +
-                "    <a class=\"nav-link " + (key === special.toLowerCase() ? "active show" : "") + "\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
-                "  </li>";
+            "    <a class=\"nav-link " + (key === special.toLowerCase() ? "active show" : "") + "\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
+            "  </li>";
     }
     tabheader += "</ul>";
     contentdiv.append(tabheader);
@@ -65,7 +77,7 @@ function generateRadios() {
 
 function saveState() {
     state = "";
-    console.log("State: (saved to var state)");
+    console.log("State: (saved to local state)");
     $(".active > input").each(function () {
         state += this.id + ",";
         $("#reset-" + this.name).removeAttr("hidden");
@@ -97,9 +109,10 @@ function loadState(givenstate) {
 }
 
 function clearAllData() {
-    Cookies.remove(SAVED_COOKIE_NAME);
+    //Cookies.remove(SAVED_COOKIE_NAME);
+    localStorage.clear();
     clearState();
-    alert("Deleted stored cookie and wiped the slate clean!", "alert-danger");
+    alert("Cleared any saved states!", "alert-danger");
 }
 
 function copyToClipboard() {
@@ -166,4 +179,9 @@ function alert(message, style = "alert-info") {
     setTimeout(function () {
         $("#" + alertid).remove();
     }, ALERT_DISPLAY_TIME);
+}
+
+function loadFromCookie() {
+    loadState(Cookies.get(SAVED_COOKIE_NAME));
+    alert("Loaded state from the Cookie, will now use web storage!");
 }
