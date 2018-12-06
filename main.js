@@ -159,6 +159,7 @@ function alert(message, style = "alert-info") {
     // Build and attach alert
     let alertid = Date.now();
     $("#alertbox").append("<div id='" + alertid + "' class=\"alert alert-dismissible " + style + "\">" +
+        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" +
         message +
         "</div>");
     // Auto dismiss alert
