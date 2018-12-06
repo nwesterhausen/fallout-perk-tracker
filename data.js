@@ -230,7 +230,7 @@ const TOTAL_PERK_CARDS = PERKS.Strength.length +
     PERKS.Agility.length + PERKS.Luck.length;
 
 let rankedCount = 0;
-for (special in Object.keys(PERKS)) {
+for (let special in Object.keys(PERKS)) {
     for (let i=0; i++; i<PERKS[special].length) {
         rankedCount += PERKS[special][i].ranks;
     }

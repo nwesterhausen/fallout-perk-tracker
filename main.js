@@ -1,5 +1,5 @@
-var state = Cookies.get(SAVED_COOKIE_NAME);
-var $loadWindow = $(MODAL_HTML);
+let state = Cookies.get(SAVED_COOKIE_NAME);
+let $loadWindow = $(MODAL_HTML);
 
 
 // Build the page
@@ -31,8 +31,7 @@ function generateRadios() {
     let key = "strength";
 
     for (let special of Object.keys(PERKS)) {
-        active =
-            tabheader += "  <li class=\"nav-item\">\n" +
+        tabheader += "  <li class=\"nav-item\">\n" +
                 "    <a class=\"nav-link " + (key === special.toLowerCase() ? "active show" : "") + "\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
                 "  </li>";
     }
@@ -123,7 +122,7 @@ function download() {
     let filename = 'perks-helper.txt';
     let text = state;
 
-    var element = document.createElement('a');
+    let element = document.createElement('a');
     element.setAttribute('href', 'data:text/yaml;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
 
