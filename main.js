@@ -13,7 +13,7 @@ if (state) {
 
 // Register auto-saving
 $("input[type='radio']").change(function () {
-    setTimeout(function() {
+    setTimeout(function () {
         saveState();
         Cookies.set(SAVED_COOKIE_NAME, state);
     }, 100);
@@ -29,31 +29,31 @@ function generateRadios() {
     let contentdiv = $("#content");
     let tabheader = "<ul class=\"nav nav-tabs\">\n";
     let key = "strength";
-    
+
     for (let special of Object.keys(PERKS)) {
         active =
-        tabheader += "  <li class=\"nav-item\">\n" +
-            "    <a class=\"nav-link "+ (key ==  special.toLowerCase() ? "active show" : "") +"\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
-            "  </li>";
+            tabheader += "  <li class=\"nav-item\">\n" +
+                "    <a class=\"nav-link " + (key == special.toLowerCase() ? "active show" : "") + "\" data-toggle=\"tab\" href=\"#" + special + "\">" + special.substring(0, 1) + "<span class='specText'>" + special.substring(1) + "</span> </a>\n" +
+                "  </li>";
     }
     tabheader += "</ul>";
     contentdiv.append(tabheader);
     let tabcontent = "<div id=\"tabContent\" class=\"tab-content\">";
     for (let special of Object.keys(PERKS)) {
-        tabcontent += "<div class=\"tab-pane fade " + (key ==  special.toLowerCase() ? "active show" : "") + "\" id=\""+special+"\">";
+        tabcontent += "<div class=\"tab-pane fade " + (key == special.toLowerCase() ? "active show" : "") + "\" id=\"" + special + "\">";
         tabcontent += "<legend>" + special + "</legend>";
         for (let i = 0; i < PERKS[special].length; i++) {
             let groupname = PERKS[special][i].name.replace(/[ !'".]/g, "-").toLowerCase();
-            let radios = "<div class='row mb-2' id='"+groupname+"'><div class='col-sm-3'><span class='mr-1'>"+PERKS[special][i].name+"</span><span class='badge badge-pill badge-secondary'>Level "+PERKS[special][i].levelreq+"</span></div>" +
+            let radios = "<div class='row mb-2' id='" + groupname + "'><div class='col-sm-3'><span class='mr-1'>" + PERKS[special][i].name + "</span><span class='badge badge-pill badge-secondary'>Level " + PERKS[special][i].levelreq + "</span></div>" +
                 "<div class=\"btn-group btn-group-toggle col-sm-6\" data-toggle=\"buttons\">";
             for (let j = 1; j <= PERKS[special][i].ranks; j++)
                 radios += "<label class=\"btn btn-outline-primary\">" +
-                    "<input type=\"radio\" name=\""+groupname+"\" id=\""+groupname+"rank"+j+"\" autocomplete=\"off\"> Rank" + j +
+                    "<input type=\"radio\" name=\"" + groupname + "\" id=\"" + groupname + "rank" + j + "\" autocomplete=\"off\"> Rank" + j +
                     "</label>";
             radios += "</div>" +
-                "<div class='col-sm-3'><button hidden='' class='btn btn-danger btn-sm' id='reset-"+groupname+"' onclick='(function(){" +
-                "$(\"#"+groupname+" > div > label\").removeClass(\"active\");" +
-                "$(\"#reset-"+groupname+"\").attr(\"hidden\",\"\");" +
+                "<div class='col-sm-3'><button hidden='' class='btn btn-danger btn-sm' id='reset-" + groupname + "' onclick='(function(){" +
+                "$(\"#" + groupname + " > div > label\").removeClass(\"active\");" +
+                "$(\"#reset-" + groupname + "\").attr(\"hidden\",\"\");" +
                 "})()'>RESET</button></div>" +
                 "</div>";
             tabcontent += radios;
@@ -67,18 +67,18 @@ function generateRadios() {
 function saveState() {
     state = "";
     console.log("State: (saved to var state)");
-    $(".active > input").each(function() {
-        state += this.id +",";
-        $("#reset-"+this.name).removeAttr("hidden");
+    $(".active > input").each(function () {
+        state += this.id + ",";
+        $("#reset-" + this.name).removeAttr("hidden");
     });
     state = state.substring(0, state.length - 1);
     console.log(state);
 }
 
 function clearState() {
-    $(".active > input").each(function() {
-        $("#"+this.id).parent().removeClass("active");
-        $("#reset-"+this.name).attr("hidden","");
+    $(".active > input").each(function () {
+        $("#" + this.id).parent().removeClass("active");
+        $("#reset-" + this.name).attr("hidden", "");
     });
 }
 
@@ -87,7 +87,7 @@ function loadState(givenstate) {
     if (typeof givenstate !== "undefined") {
         if (givenstate === "") return;
         for (let idn of givenstate.split(',')) {
-            $("#"+idn).parent().addClass("active");
+            $("#" + idn).parent().addClass("active");
         }
     } else {
         for (let idn of state.split(',')) {
@@ -100,14 +100,7 @@ function loadState(givenstate) {
 function clearAllData() {
     Cookies.remove(SAVED_COOKIE_NAME);
     clearState();
-    let alertid = Date.now();
-    $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-danger\">" +
-        "Deleted stored cookie and wiped the slate clean!" +
-        "</div>");
-    setTimeout(function() {
-        $("#"+alertid).remove();
-    }, 5000);
-
+    alert("Deleted stored cookie and wiped the slate clean!", "alert-danger");
 }
 
 function copyToClipboard() {
@@ -119,13 +112,7 @@ function copyToClipboard() {
     textArea.select();
     document.execCommand("copy");
     $('#tempTA').remove();
-    let alertid = Date.now();
-    $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-success\">" +
-        "Copied current state to clipboard!" +
-        "</div>");
-    setTimeout(function() {
-        $("#"+alertid).remove();
-    }, 5000);
+    alert("Copied current state to clipboard!", "alert-success");
 }
 
 /**
@@ -150,32 +137,32 @@ function download() {
 
 function loadFromClipboard() {
     $loadWindow.modal('show');
-    $("#btnModalLoad").click(function(){
+    $("#btnModalLoad").click(function () {
         $("#btnModalLoad").unbind();
         $loadWindow.modal('hide');
         let tempState = $("#loadStateTextarea").val();
         $("#loadStateTextarea").html("");
         console.log("Sanitizing loaded state");
-        tempState = ""+ tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
+        tempState = "" + tempState.replace(/[ !'".]/g, "-").replace(/[^a-zA-Z0-9\-,]/g, "");
         loadState(tempState);
         if (state && state !== "" && tempState !== "") {
-            //successfully loaded
-            let alertid = Date.now();
-            $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-success\">" +
-                "Loaded your perks successfully!" +
-                "</div>");
-            setTimeout(function() {
-                $("#"+alertid).remove();
-            }, 5000);
-            $("#loadStateTextarea").html("");
+            // successfully loaded
+            alert("Loaded your perks successfully!", "alert-success");
         } else {
-            let alertid = Date.now();
-            $("#alertbox").append("<div id='"+alertid+"' class=\"alert alert-danger\">" +
-                "Couldn't load a single perk!" +
-                "</div>");
-            setTimeout(function() {
-                $("#"+alertid).remove();
-            }, 5000);
+            // we failed
+            alert("Couldn't load a single perk!", "alert-danger");
         }
     });
+}
+
+function alert(message, style = "alert-info") {
+    // Build and attach alert
+    let alertid = Date.now();
+    $("#alertbox").append("<div id='" + alertid + "' class=\"alert alert-dismissible " + style + "\">" +
+        message +
+        "</div>");
+    // Auto dismiss alert
+    setTimeout(function () {
+        $("#" + alertid).remove();
+    }, ALERT_DISPLAY_TIME);
 }

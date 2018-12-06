@@ -258,3 +258,5 @@ const MODAL_HTML = "<div class=\"modal\">" +
     "    </div>" +
     "  </div>" +
     "</div>";
+
+const ALERT_DISPLAY_TIME = 5000; //5 secs
